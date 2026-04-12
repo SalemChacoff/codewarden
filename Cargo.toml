@@ -2,5 +2,9 @@
 name = "codewarden"
 version = "0.1.0"
 edition = "2024"
+description = "A code analysis and security warden tool for Rust projects"
+license = "MIT"
+authors = []
+repository = ""
 
 [dependencies]
