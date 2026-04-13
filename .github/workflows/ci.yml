@@ -26,11 +26,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Reads channel + components from rust-toolchain.toml automatically
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: ''
+          toolchain: stable
+          components: rustfmt
 
       - name: Check formatting
         run: cargo fmt --all --check
@@ -44,7 +44,8 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: ''
+          toolchain: stable
+          components: clippy
 
       - name: Cache dependencies
         uses: Swatinem/rust-cache@v2
@@ -78,7 +79,7 @@ jobs:
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@master
         with:
-          toolchain: ''
+          toolchain: stable
 
       - name: Cache dependencies
         uses: Swatinem/rust-cache@v2
