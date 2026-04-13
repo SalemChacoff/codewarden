@@ -1,0 +1,16 @@
+[package]
+name = "codewarden-cli"
+version.workspace = true
+edition.workspace = true
+description = "CLI for codewarden – code analysis and security warden tool"
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "codewarden"
+path = "src/main.rs"
+
+[dependencies]
+codewarden-core.workspace = true
+

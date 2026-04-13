@@ -3,5 +3,12 @@
 version = 4
 
 [[package]]
-name = "codewarden"
+name = "codewarden-cli"
+version = "0.1.0"
+dependencies = [
+ "codewarden-core",
+]
+
+[[package]]
+name = "codewarden-core"
 version = "0.1.0"

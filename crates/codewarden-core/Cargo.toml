@@ -1,0 +1,11 @@
+[package]
+name = "codewarden-core"
+version.workspace = true
+edition.workspace = true
+description = "Core library for codewarden – code analysis and security engine"
+license.workspace = true
+authors.workspace = true
+repository.workspace = true
+
+[dependencies]
+

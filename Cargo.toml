@@ -1,10 +1,18 @@
-[package]
-name = "codewarden"
-version = "0.1.0"
-edition = "2024"
-description = "A code analysis and security warden tool for Rust projects"
-license = "MIT"
-authors = []
-repository = ""
+[workspace]
+members = [
+    "crates/codewarden-core",
+    "crates/codewarden-cli",
+]
+resolver = "2"
 
-[dependencies]
+# ── Shared metadata inherited by every crate ──────────────────────────────────
+[workspace.package]
+version     = "0.1.0"
+edition     = "2024"
+license     = "MIT"
+authors     = []
+repository  = ""
+
+# ── Workspace-level dependencies (pinned here, referenced with .workspace = true)
+[workspace.dependencies]
+codewarden-core = { path = "crates/codewarden-core" }
