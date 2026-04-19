@@ -3,6 +3,9 @@
 //! This crate contains all the business logic, analysis algorithms and data
 //! types shared across the CodeWarden toolchain. The CLI and any future
 
+pub mod diff;
+pub mod scan;
+
 /// Returns the library version string at compile time.
 pub fn version() -> &'static str {
     env!("CARGO_PKG_VERSION")
