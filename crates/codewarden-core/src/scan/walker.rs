@@ -24,9 +24,11 @@ fn walk_recursive(root: &Path, dir: &Path, out: &mut Vec<FileChange>) {
             if !filter::should_skip_dir(&path) {
                 walk_recursive(root, &path, out);
             }
-        } else if path.is_file() && should_scan(&path)
-            && let Some(fc) = file_to_file_change(root, &path) {
-                out.push(fc);
+        } else if path.is_file()
+            && should_scan(&path)
+            && let Some(fc) = file_to_file_change(root, &path)
+        {
+            out.push(fc);
         }
     }
 }
