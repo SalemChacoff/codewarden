@@ -24,10 +24,9 @@ fn walk_recursive(root: &Path, dir: &Path, out: &mut Vec<FileChange>) {
             if !filter::should_skip_dir(&path) {
                 walk_recursive(root, &path, out);
             }
-        } else if path.is_file() && should_scan(&path) {
-            if let Some(fc) = file_to_file_change(root, &path) {
+        } else if path.is_file() && should_scan(&path)
+            && let Some(fc) = file_to_file_change(root, &path) {
                 out.push(fc);
-            }
         }
     }
 }
@@ -72,7 +71,7 @@ mod tests {
         let _ = fs::remove_dir_all(dir);
     }
 
-    fn write(dir: &PathBuf, rel: &str, content: &str) -> PathBuf {
+    fn write(dir: &Path, rel: &str, content: &str) -> PathBuf {
         let path = dir.join(rel);
         if let Some(parent) = path.parent() {
             fs::create_dir_all(parent).expect("create parent dirs");

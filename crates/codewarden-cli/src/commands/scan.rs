@@ -37,7 +37,7 @@ mod tests {
         let _ = fs::remove_dir_all(dir);
     }
 
-    fn write_file(dir: &PathBuf, rel: &str, content: &str) {
+    fn write_file(dir: &Path, rel: &str, content: &str) {
         let path = dir.join(rel);
         if let Some(p) = path.parent() {
             fs::create_dir_all(p).expect("create parent");
