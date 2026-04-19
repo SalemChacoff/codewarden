@@ -10,8 +10,7 @@ pub fn run_with_writer(path: &str, w: &mut impl Write) {
     let root = Path::new(path);
     let files = walk_directory(root);
 
-    writeln!(w, "Found {} scannable files in '{}'", files.len(), path)
-        .expect("write failed");
+    writeln!(w, "Found {} scannable files in '{}'", files.len(), path).expect("write failed");
 
     for file in &files {
         writeln!(w, "  scanning: {}", file.path).expect("write failed");
@@ -29,8 +28,7 @@ mod tests {
     use std::path::PathBuf;
 
     fn temp_dir(label: &str) -> PathBuf {
-        let dir = std::env::temp_dir()
-            .join(format!("cw_scan_test__{label}__{}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("cw_scan_test__{label}__{}", std::process::id()));
         fs::create_dir_all(&dir).expect("create temp dir");
         dir
     }
@@ -59,10 +57,7 @@ mod tests {
         let out = capture(root.to_str().unwrap());
         cleanup(&root);
 
-        assert!(
-            out.contains("Found 0 scannable files"),
-            "unexpected output: {out}"
-        );
+        assert!(out.contains("Found 0 scannable files"), "unexpected output: {out}");
     }
 
     #[test]

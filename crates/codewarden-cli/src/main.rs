@@ -42,7 +42,6 @@ fn main() {
 mod tests {
     use super::*;
 
-
     fn args(v: &[&str]) -> Vec<String> {
         v.iter().map(|s| s.to_string()).collect()
     }
@@ -58,7 +57,9 @@ mod tests {
         let a = args(&["codewarden", "scan", "relative/path/to/code"]);
         assert_eq!(
             parse_args(&a),
-            Command::Scan { path: "relative/path/to/code" }
+            Command::Scan {
+                path: "relative/path/to/code"
+            }
         );
     }
 
@@ -99,8 +100,7 @@ mod tests {
 
     #[test]
     fn scan_command_runs_without_panic_on_empty_dir() {
-        let dir = std::env::temp_dir()
-            .join(format!("cw_cli_test_{}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("cw_cli_test_{}", std::process::id()));
         std::fs::create_dir_all(&dir).expect("create temp dir");
 
         commands::scan::run(dir.to_str().expect("valid path"));

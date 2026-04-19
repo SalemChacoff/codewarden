@@ -63,8 +63,7 @@ mod tests {
     use std::path::PathBuf;
 
     fn temp_dir(label: &str) -> PathBuf {
-        let dir = std::env::temp_dir()
-            .join(format!("codewarden_walker_test__{label}__{}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("codewarden_walker_test__{label}__{}", std::process::id()));
         fs::create_dir_all(&dir).expect("create temp dir");
         dir
     }
@@ -141,8 +140,7 @@ mod tests {
         cleanup(&root);
 
         let paths: Vec<&str> = results.iter().map(|fc| fc.path.as_str()).collect();
-        assert!(paths.iter().all(|p| !p.contains("target")),
-                "target/ contents should be skipped, got: {paths:?}");
+        assert!(paths.iter().all(|p| !p.contains("target")), "target/ contents should be skipped, got: {paths:?}");
         assert!(paths.contains(&"src/lib.rs"));
     }
 
@@ -227,8 +225,7 @@ mod tests {
         cleanup(&root);
 
         assert_eq!(results.len(), 1);
-        assert!(!results[0].path.contains('\\'),
-                "path should use forward slashes: {}", results[0].path);
+        assert!(!results[0].path.contains('\\'), "path should use forward slashes: {}", results[0].path);
         assert_eq!(results[0].path, "sub/dir/file.ts");
     }
 
@@ -251,8 +248,7 @@ mod tests {
         let file = write(&root, "secret.rs", "fn secret() {}");
 
         // Remove read permission so read_to_string fails
-        fs::set_permissions(&file, fs::Permissions::from_mode(0o000))
-            .expect("set permissions");
+        fs::set_permissions(&file, fs::Permissions::from_mode(0o000)).expect("set permissions");
 
         let results = walk_directory(&root);
 

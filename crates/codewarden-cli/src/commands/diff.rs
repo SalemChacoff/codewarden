@@ -1,20 +1,15 @@
-use codewarden_core::diff::parse_diff;
 use codewarden_core::diff::file_change::FileChange;
+use codewarden_core::diff::parse_diff;
 use std::io::{self, Read, Write};
 use std::path::Path;
 use std::process::{Command, Stdio};
-
 
 pub fn run(path: &str) {
     run_with_writer(path, &mut io::stdout());
 }
 
 pub fn run_with_writer(path: &str, w: &mut impl Write) {
-    let diff_text = if path == "-" {
-        read_stdin()
-    } else {
-        run_git_diff(path)
-    };
+    let diff_text = if path == "-" { read_stdin() } else { run_git_diff(path) };
 
     let files = parse_diff(&diff_text);
     report(path, &files, w);
@@ -29,9 +24,7 @@ fn run_git_diff(dir: &str) -> String {
         .output();
 
     match output {
-        Ok(out) if out.status.success() || !out.stdout.is_empty() => {
-            String::from_utf8_lossy(&out.stdout).into_owned()
-        }
+        Ok(out) if out.status.success() || !out.stdout.is_empty() => String::from_utf8_lossy(&out.stdout).into_owned(),
         _ => String::new(),
     }
 }
@@ -43,24 +36,13 @@ fn read_stdin() -> String {
 }
 
 fn report(source: &str, files: &[FileChange], w: &mut impl Write) {
-    writeln!(
-        w,
-        "Found {} changed file(s) in '{}'",
-        files.len(),
-        source
-    )
-    .expect("write failed");
+    writeln!(w, "Found {} changed file(s) in '{}'", files.len(), source).expect("write failed");
 
     for file in files {
         let added: usize = file.added_lines().count();
         let removed: usize = file.removed_lines().count();
 
-        writeln!(
-            w,
-            "  {:?} {} (+{} -{} lines)",
-            file.kind, file.path, added, removed
-        )
-        .expect("write failed");
+        writeln!(w, "  {:?} {} (+{} -{} lines)", file.kind, file.path, added, removed).expect("write failed");
 
         for line in file.added_lines() {
             let _ = line;
@@ -237,8 +219,7 @@ diff --git a/x.rs b/x.rs
 
     #[test]
     fn non_git_directory_yields_zero_changed_files() {
-        let dir = std::env::temp_dir()
-            .join(format!("cw_diff_nogit_{}", std::process::id()));
+        let dir = std::env::temp_dir().join(format!("cw_diff_nogit_{}", std::process::id()));
         std::fs::create_dir_all(&dir).unwrap();
 
         let out = capture_writer(dir.to_str().unwrap());
@@ -247,4 +228,3 @@ diff --git a/x.rs b/x.rs
         assert!(out.contains("Found 0 changed file(s)"), "got: {out}");
     }
 }
-

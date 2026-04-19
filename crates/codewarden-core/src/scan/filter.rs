@@ -78,70 +78,104 @@ mod tests {
 
         macro_rules! assert_scanned {
             ($path:expr) => {
-                assert!(
-                    should_scan(Path::new($path)),
-                    "expected '{}' to be scanned",
-                    $path
-                );
+                assert!(should_scan(Path::new($path)), "expected '{}' to be scanned", $path);
             };
         }
 
         #[test]
-        fn rust_file() { assert_scanned!("src/main.rs"); }
+        fn rust_file() {
+            assert_scanned!("src/main.rs");
+        }
 
         #[test]
-        fn javascript_file() { assert_scanned!("app/index.js"); }
+        fn javascript_file() {
+            assert_scanned!("app/index.js");
+        }
 
         #[test]
-        fn typescript_file() { assert_scanned!("app/index.ts"); }
+        fn typescript_file() {
+            assert_scanned!("app/index.ts");
+        }
 
         #[test]
-        fn python_file() { assert_scanned!("scripts/deploy.py"); }
+        fn python_file() {
+            assert_scanned!("scripts/deploy.py");
+        }
 
         #[test]
-        fn go_file() { assert_scanned!("cmd/main.go"); }
+        fn go_file() {
+            assert_scanned!("cmd/main.go");
+        }
 
         #[test]
-        fn java_file() { assert_scanned!("src/Main.java"); }
+        fn java_file() {
+            assert_scanned!("src/Main.java");
+        }
 
         #[test]
-        fn php_file() { assert_scanned!("public/index.php"); }
+        fn php_file() {
+            assert_scanned!("public/index.php");
+        }
 
         #[test]
-        fn shell_sh_file() { assert_scanned!("scripts/setup.sh"); }
+        fn shell_sh_file() {
+            assert_scanned!("scripts/setup.sh");
+        }
 
         #[test]
-        fn shell_bash_file() { assert_scanned!("scripts/run.bash"); }
+        fn shell_bash_file() {
+            assert_scanned!("scripts/run.bash");
+        }
 
         #[test]
-        fn yaml_file() { assert_scanned!("config/app.yaml"); }
+        fn yaml_file() {
+            assert_scanned!("config/app.yaml");
+        }
 
         #[test]
-        fn yml_file() { assert_scanned!("config/app.yml"); }
+        fn yml_file() {
+            assert_scanned!("config/app.yml");
+        }
 
         #[test]
-        fn toml_file() { assert_scanned!("Cargo.toml"); }
+        fn toml_file() {
+            assert_scanned!("Cargo.toml");
+        }
 
         #[test]
-        fn json_file() { assert_scanned!("package.json"); }
+        fn json_file() {
+            assert_scanned!("package.json");
+        }
 
         #[test]
-        fn dockerfile_extension() { assert_scanned!("deploy/app.dockerfile"); }
+        fn dockerfile_extension() {
+            assert_scanned!("deploy/app.dockerfile");
+        }
 
         #[test]
-        fn terraform_file() { assert_scanned!("infra/main.tf"); }
+        fn terraform_file() {
+            assert_scanned!("infra/main.tf");
+        }
 
         #[test]
-        fn ruby_file() { assert_scanned!("lib/helper.rb"); }
+        fn ruby_file() {
+            assert_scanned!("lib/helper.rb");
+        }
 
         #[test]
-        fn csharp_file() { assert_scanned!("src/Program.cs"); }
+        fn csharp_file() {
+            assert_scanned!("src/Program.cs");
+        }
 
         #[test]
-        fn cpp_file() { assert_scanned!("src/main.cpp"); }
+        fn cpp_file() {
+            assert_scanned!("src/main.cpp");
+        }
 
         #[test]
-        fn c_file() { assert_scanned!("src/util.c"); }
+        fn c_file() {
+            assert_scanned!("src/util.c");
+        }
     }
 
     mod should_scan_rejected_extensions {
@@ -149,40 +183,54 @@ mod tests {
 
         macro_rules! assert_not_scanned {
             ($path:expr) => {
-                assert!(
-                    !should_scan(Path::new($path)),
-                    "expected '{}' NOT to be scanned",
-                    $path
-                );
+                assert!(!should_scan(Path::new($path)), "expected '{}' NOT to be scanned", $path);
             };
         }
 
         #[test]
-        fn binary_exe() { assert_not_scanned!("target/debug/app.exe"); }
+        fn binary_exe() {
+            assert_not_scanned!("target/debug/app.exe");
+        }
 
         #[test]
-        fn compiled_rlib() { assert_not_scanned!("target/debug/libfoo.rlib"); }
+        fn compiled_rlib() {
+            assert_not_scanned!("target/debug/libfoo.rlib");
+        }
 
         #[test]
-        fn image_png() { assert_not_scanned!("assets/logo.png"); }
+        fn image_png() {
+            assert_not_scanned!("assets/logo.png");
+        }
 
         #[test]
-        fn image_jpg() { assert_not_scanned!("assets/photo.jpg"); }
+        fn image_jpg() {
+            assert_not_scanned!("assets/photo.jpg");
+        }
 
         #[test]
-        fn pdf_file() { assert_not_scanned!("docs/report.pdf"); }
+        fn pdf_file() {
+            assert_not_scanned!("docs/report.pdf");
+        }
 
         #[test]
-        fn zip_archive() { assert_not_scanned!("dist/release.zip"); }
+        fn zip_archive() {
+            assert_not_scanned!("dist/release.zip");
+        }
 
         #[test]
-        fn lock_file() { assert_not_scanned!("Cargo.lock"); }
+        fn lock_file() {
+            assert_not_scanned!("Cargo.lock");
+        }
 
         #[test]
-        fn markdown_file() { assert_not_scanned!("README.md"); }
+        fn markdown_file() {
+            assert_not_scanned!("README.md");
+        }
 
         #[test]
-        fn no_extension() { assert_not_scanned!("Makefile"); }
+        fn no_extension() {
+            assert_not_scanned!("Makefile");
+        }
 
         #[test]
         fn dockerfile_no_extension_is_not_scanned() {
@@ -277,82 +325,109 @@ mod tests {
         }
     }
 
-
     mod should_skip_dir_tests {
         use super::*;
 
         macro_rules! assert_skipped {
             ($path:expr) => {
-                assert!(
-                    should_skip_dir(Path::new($path)),
-                    "expected dir '{}' to be skipped",
-                    $path
-                );
+                assert!(should_skip_dir(Path::new($path)), "expected dir '{}' to be skipped", $path);
             };
         }
 
         macro_rules! assert_not_skipped {
             ($path:expr) => {
-                assert!(
-                    !should_skip_dir(Path::new($path)),
-                    "expected dir '{}' NOT to be skipped",
-                    $path
-                );
+                assert!(!should_skip_dir(Path::new($path)), "expected dir '{}' NOT to be skipped", $path);
             };
         }
 
         #[test]
-        fn target_dir() { assert_skipped!("target"); }
+        fn target_dir() {
+            assert_skipped!("target");
+        }
 
         #[test]
-        fn target_dir_nested() { assert_skipped!("crates/foo/target"); }
+        fn target_dir_nested() {
+            assert_skipped!("crates/foo/target");
+        }
 
         #[test]
-        fn node_modules_dir() { assert_skipped!("node_modules"); }
+        fn node_modules_dir() {
+            assert_skipped!("node_modules");
+        }
 
         #[test]
-        fn vendor_dir() { assert_skipped!("vendor"); }
+        fn vendor_dir() {
+            assert_skipped!("vendor");
+        }
 
         #[test]
-        fn git_dir() { assert_skipped!(".git"); }
+        fn git_dir() {
+            assert_skipped!(".git");
+        }
 
         #[test]
-        fn dist_dir() { assert_skipped!("dist"); }
+        fn dist_dir() {
+            assert_skipped!("dist");
+        }
 
         #[test]
-        fn build_dir() { assert_skipped!("build"); }
+        fn build_dir() {
+            assert_skipped!("build");
+        }
 
         #[test]
-        fn pycache_dir() { assert_skipped!("__pycache__"); }
+        fn pycache_dir() {
+            assert_skipped!("__pycache__");
+        }
 
         #[test]
-        fn idea_dir() { assert_skipped!(".idea"); }
+        fn idea_dir() {
+            assert_skipped!(".idea");
+        }
 
         #[test]
-        fn vscode_dir() { assert_skipped!(".vscode"); }
+        fn vscode_dir() {
+            assert_skipped!(".vscode");
+        }
 
         #[test]
-        fn out_dir() { assert_skipped!("out"); }
+        fn out_dir() {
+            assert_skipped!("out");
+        }
 
         #[test]
-        fn bin_dir() { assert_skipped!("bin"); }
+        fn bin_dir() {
+            assert_skipped!("bin");
+        }
 
         #[test]
-        fn obj_dir() { assert_skipped!("obj"); }
+        fn obj_dir() {
+            assert_skipped!("obj");
+        }
 
         #[test]
-        fn src_dir_is_not_skipped() { assert_not_skipped!("src"); }
+        fn src_dir_is_not_skipped() {
+            assert_not_skipped!("src");
+        }
 
         #[test]
-        fn crates_dir_is_not_skipped() { assert_not_skipped!("crates"); }
+        fn crates_dir_is_not_skipped() {
+            assert_not_skipped!("crates");
+        }
 
         #[test]
-        fn lib_dir_is_not_skipped() { assert_not_skipped!("lib"); }
+        fn lib_dir_is_not_skipped() {
+            assert_not_skipped!("lib");
+        }
 
         #[test]
-        fn tests_dir_is_not_skipped() { assert_not_skipped!("tests"); }
+        fn tests_dir_is_not_skipped() {
+            assert_not_skipped!("tests");
+        }
 
         #[test]
-        fn docs_dir_is_not_skipped() { assert_not_skipped!("docs"); }
+        fn docs_dir_is_not_skipped() {
+            assert_not_skipped!("docs");
+        }
     }
 }

@@ -64,16 +64,24 @@ mod tests {
         assert_eq!(ChangeKind::Modified, ChangeKind::Modified);
         assert_eq!(ChangeKind::Deleted, ChangeKind::Deleted);
         assert_eq!(
-            ChangeKind::Renamed { from: "old.rs".to_string() },
-            ChangeKind::Renamed { from: "old.rs".to_string() }
+            ChangeKind::Renamed {
+                from: "old.rs".to_string()
+            },
+            ChangeKind::Renamed {
+                from: "old.rs".to_string()
+            }
         );
     }
 
     #[test]
     fn change_kind_renamed_differs_by_from_path() {
         assert_ne!(
-            ChangeKind::Renamed { from: "a.rs".to_string() },
-            ChangeKind::Renamed { from: "b.rs".to_string() }
+            ChangeKind::Renamed {
+                from: "a.rs".to_string()
+            },
+            ChangeKind::Renamed {
+                from: "b.rs".to_string()
+            }
         );
     }
 
@@ -143,7 +151,6 @@ mod tests {
         let removed: Vec<&str> = fc.removed_lines().collect();
         assert_eq!(removed, vec!["x", "y"]);
     }
-
 
     #[test]
     fn added_and_removed_lines_empty_when_no_hunks() {
